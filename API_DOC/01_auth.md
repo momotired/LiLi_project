@@ -30,6 +30,9 @@
 3. 生成JWT token
 4. 更新用户最后登录时间
 
+  小程序端通过微信官方API wx.login获得临时登录凭证code 用于换取用户唯一标识
+
+![](jscode2session.png)
 ---
 
 ### 2. 刷新Token
