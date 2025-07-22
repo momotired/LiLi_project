@@ -1,0 +1,356 @@
+/**
+ * LiLi设备管家 - 通用样式
+ * 包含常用的组件样式和混入
+ */
+
+/* ==================== 混入 (Mixins) ==================== */
+
+/* 卡片样式 */
+@mixin card-style {
+  background: $bg-card;
+  border-radius: $radius-2xl;
+  box-shadow: $shadow-base;
+  backdrop-filter: blur(20px);
+}
+
+/* 按钮样式 */
+@mixin button-primary {
+  background: $primary-gradient;
+  color: $text-inverse;
+  border-radius: $radius-3xl;
+  box-shadow: 0 10rpx 30rpx rgba($primary-color, 0.3);
+  transition: all $duration-base ease;
+  border: none;
+  
+  &::after {
+    border: none;
+  }
+  
+  &:active {
+    transform: translateY(2rpx);
+    box-shadow: 0 5rpx 15rpx rgba($primary-color, 0.3);
+  }
+}
+
+@mixin button-secondary {
+  background: $bg-secondary;
+  color: $text-secondary;
+  border-radius: $radius-2xl;
+  border: 2rpx solid $border-light;
+  transition: all $duration-base ease;
+  
+  &::after {
+    border: none;
+  }
+  
+  &:active {
+    background: $gray-200;
+    border-color: $border-medium;
+  }
+}
+
+@mixin button-ghost {
+  background: transparent;
+  color: $primary-color;
+  border: 2rpx solid $primary-color;
+  border-radius: $radius-2xl;
+  transition: all $duration-base ease;
+  
+  &::after {
+    border: none;
+  }
+  
+  &:active {
+    background: rgba($primary-color, 0.1);
+  }
+}
+
+/* 输入框样式 */
+@mixin input-style {
+  background: $bg-primary;
+  border: 2rpx solid $border-light;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  font-size: $font-size-base;
+  color: $text-primary;
+  transition: border-color $duration-base ease;
+  
+  &:focus {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 6rpx rgba($primary-color, 0.1);
+  }
+  
+  &::placeholder {
+    color: $text-tertiary;
+  }
+}
+
+/* 文本样式 */
+@mixin text-heading {
+  font-size: $font-size-2xl;
+  font-weight: bold;
+  color: $text-primary;
+  line-height: $line-height-tight;
+}
+
+@mixin text-title {
+  font-size: $font-size-xl;
+  font-weight: 600;
+  color: $text-primary;
+  line-height: $line-height-tight;
+}
+
+@mixin text-body {
+  font-size: $font-size-base;
+  color: $text-secondary;
+  line-height: $line-height-normal;
+}
+
+@mixin text-caption {
+  font-size: $font-size-sm;
+  color: $text-tertiary;
+  line-height: $line-height-normal;
+}
+
+@mixin text-link {
+  color: $primary-color;
+  text-decoration: none;
+  transition: color $duration-base ease;
+  
+  &:active {
+    color: $primary-dark;
+  }
+}
+
+/* 布局样式 */
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+@mixin flex-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 定位样式 */
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin absolute-full {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* 动画效果 */
+@mixin fade-in($duration: $duration-base) {
+  animation: fadeIn $duration ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@mixin slide-up($duration: $duration-base) {
+  animation: slideUp $duration ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@mixin scale-in($duration: $duration-base) {
+  animation: scaleIn $duration ease-out;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@mixin float($duration: 6s) {
+  animation: float $duration ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px); 
+  }
+  50% { 
+    transform: translateY(-20px); 
+  }
+}
+
+/* 响应式断点 */
+@mixin mobile-only {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin tablet-up {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin desktop-up {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+/* ==================== 通用类样式 ==================== */
+
+/* 文本对齐 */
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+/* 文本颜色 */
+.text-primary { color: $text-primary; }
+.text-secondary { color: $text-secondary; }
+.text-tertiary { color: $text-tertiary; }
+.text-inverse { color: $text-inverse; }
+.text-success { color: $success-color; }
+.text-warning { color: $warning-color; }
+.text-error { color: $error-color; }
+
+/* 背景颜色 */
+.bg-primary { background-color: $bg-primary; }
+.bg-secondary { background-color: $bg-secondary; }
+.bg-tertiary { background-color: $bg-tertiary; }
+
+/* 间距 */
+.m-0 { margin: 0; }
+.mt-xs { margin-top: $spacing-xs; }
+.mt-sm { margin-top: $spacing-sm; }
+.mt-base { margin-top: $spacing-base; }
+.mt-lg { margin-top: $spacing-lg; }
+.mt-xl { margin-top: $spacing-xl; }
+
+.mb-xs { margin-bottom: $spacing-xs; }
+.mb-sm { margin-bottom: $spacing-sm; }
+.mb-base { margin-bottom: $spacing-base; }
+.mb-lg { margin-bottom: $spacing-lg; }
+.mb-xl { margin-bottom: $spacing-xl; }
+
+.ml-xs { margin-left: $spacing-xs; }
+.ml-sm { margin-left: $spacing-sm; }
+.ml-base { margin-left: $spacing-base; }
+.ml-lg { margin-left: $spacing-lg; }
+.ml-xl { margin-left: $spacing-xl; }
+
+.mr-xs { margin-right: $spacing-xs; }
+.mr-sm { margin-right: $spacing-sm; }
+.mr-base { margin-right: $spacing-base; }
+.mr-lg { margin-right: $spacing-lg; }
+.mr-xl { margin-right: $spacing-xl; }
+
+.p-0 { padding: 0; }
+.pt-xs { padding-top: $spacing-xs; }
+.pt-sm { padding-top: $spacing-sm; }
+.pt-base { padding-top: $spacing-base; }
+.pt-lg { padding-top: $spacing-lg; }
+.pt-xl { padding-top: $spacing-xl; }
+
+.pb-xs { padding-bottom: $spacing-xs; }
+.pb-sm { padding-bottom: $spacing-sm; }
+.pb-base { padding-bottom: $spacing-base; }
+.pb-lg { padding-bottom: $spacing-lg; }
+.pb-xl { padding-bottom: $spacing-xl; }
+
+.pl-xs { padding-left: $spacing-xs; }
+.pl-sm { padding-left: $spacing-sm; }
+.pl-base { padding-left: $spacing-base; }
+.pl-lg { padding-left: $spacing-lg; }
+.pl-xl { padding-left: $spacing-xl; }
+
+.pr-xs { padding-right: $spacing-xs; }
+.pr-sm { padding-right: $spacing-sm; }
+.pr-base { padding-right: $spacing-base; }
+.pr-lg { padding-right: $spacing-lg; }
+.pr-xl { padding-right: $spacing-xl; }
+
+/* 布局 */
+.flex { display: flex; }
+.flex-column { @include flex-column; }
+.flex-center { @include flex-center; }
+.flex-between { @include flex-between; }
+.flex-start { @include flex-start; }
+.flex-end { @include flex-end; }
+.flex-1 { flex: 1; }
+
+/* 圆角 */
+.rounded-xs { border-radius: $radius-xs; }
+.rounded-sm { border-radius: $radius-sm; }
+.rounded-base { border-radius: $radius-base; }
+.rounded-lg { border-radius: $radius-lg; }
+.rounded-xl { border-radius: $radius-xl; }
+.rounded-2xl { border-radius: $radius-2xl; }
+.rounded-3xl { border-radius: $radius-3xl; }
+.rounded-full { border-radius: $radius-full; }
+
+/* 阴影 */
+.shadow-sm { box-shadow: $shadow-sm; }
+.shadow-base { box-shadow: $shadow-base; }
+.shadow-lg { box-shadow: $shadow-lg; }
+.shadow-xl { box-shadow: $shadow-xl; }
+
+/* 动画 */
+.fade-in { @include fade-in; }
+.slide-up { @include slide-up; }
+.scale-in { @include scale-in; }

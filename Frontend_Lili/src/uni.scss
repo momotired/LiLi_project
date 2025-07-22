@@ -74,3 +74,110 @@ $uni-color-subtitle: #555; // 二级标题颜色
 $uni-font-size-subtitle: 18px;
 $uni-color-paragraph: #3f536e; // 文章段落颜色
 $uni-font-size-paragraph: 15px;
+
+/* ==================== LiLi设备管家 - 自定义样式变量 ==================== */
+
+/* 主题色彩 - 高级蓝色系 */
+$primary-color: #2563eb;
+$primary-light: #3b82f6;
+$primary-dark: #1d4ed8;
+$primary-gradient: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+
+/* 高级蓝色渐变方案 */
+$blue-gradient-deep: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+$blue-gradient-ocean: linear-gradient(135deg, #0c4a6e 0%, #0369a1 50%, #0284c7 100%);
+$blue-gradient-sky: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #3b82f6 100%);
+$blue-gradient-royal: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #4338ca 100%);
+
+/* 辅助色 */
+$secondary-color: #07c160; // 微信绿
+$accent-color: #ff6b6b; // 强调色
+$warning-color: #ffa726;
+$error-color: #f44336;
+$success-color: #4caf50;
+
+/* 中性色 */
+$white: #ffffff;
+$black: #000000;
+$gray-50: #fafafa;
+$gray-100: #f5f5f5;
+$gray-200: #eeeeee;
+$gray-300: #e0e0e0;
+$gray-400: #bdbdbd;
+$gray-500: #9e9e9e;
+$gray-600: #757575;
+$gray-700: #616161;
+$gray-800: #424242;
+$gray-900: #212121;
+
+/* 文字颜色 */
+$text-primary: #333333;
+$text-secondary: #666666;
+$text-tertiary: #999999;
+$text-disabled: #cccccc;
+$text-inverse: #ffffff;
+
+/* 背景颜色 */
+$bg-primary: #ffffff;
+$bg-secondary: #f8f9fa;
+$bg-tertiary: #f0f2f5;
+$bg-overlay: rgba(0, 0, 0, 0.5);
+$bg-card: rgba(255, 255, 255, 0.95);
+$bg-glass: rgba(255, 255, 255, 0.2);
+
+/* 边框颜色 */
+$border-light: #e5e5e5;
+$border-medium: #d0d0d0;
+$border-dark: #b0b0b0;
+
+/* 字体大小 (rpx单位) */
+$font-size-xs: 20rpx;
+$font-size-sm: 24rpx;
+$font-size-base: 28rpx;
+$font-size-lg: 32rpx;
+$font-size-xl: 36rpx;
+$font-size-2xl: 40rpx;
+$font-size-3xl: 48rpx;
+$font-size-4xl: 60rpx;
+
+/* 行高 */
+$line-height-tight: 1.2;
+$line-height-normal: 1.5;
+$line-height-loose: 1.8;
+
+/* 圆角 (rpx单位) */
+$radius-xs: 4rpx;
+$radius-sm: 8rpx;
+$radius-base: 12rpx;
+$radius-lg: 16rpx;
+$radius-xl: 20rpx;
+$radius-2xl: 24rpx;
+$radius-3xl: 30rpx;
+$radius-full: 50%;
+
+/* 间距 (rpx单位) */
+$spacing-xs: 8rpx;
+$spacing-sm: 12rpx;
+$spacing-base: 16rpx;
+$spacing-lg: 24rpx;
+$spacing-xl: 32rpx;
+$spacing-2xl: 48rpx;
+$spacing-3xl: 64rpx;
+$spacing-4xl: 80rpx;
+
+/* 阴影 */
+$shadow-sm: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+$shadow-base: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 8rpx 32rpx rgba(0, 0, 0, 0.15);
+$shadow-xl: 0 16rpx 48rpx rgba(0, 0, 0, 0.2);
+
+/* 动画时长 */
+$duration-fast: 0.2s;
+$duration-base: 0.3s;
+$duration-slow: 0.5s;
+
+/* 更新原有变量以适配新设计 */
+$uni-color-primary: $primary-color;
+$uni-color-success: $success-color;
+$uni-color-warning: $warning-color;
+$uni-color-error: $error-color;
