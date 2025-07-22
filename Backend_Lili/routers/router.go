@@ -2,7 +2,7 @@ package routers
 
 import (
 	// 导入各模块的路由
-	_ "lili-backend/internal/auth/routers"
+	_ "Backend_Lili/internal/auth/router"
 
 	beego "github.com/beego/beego/v2/server/web"
 	"github.com/beego/beego/v2/server/web/context"

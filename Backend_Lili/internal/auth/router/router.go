@@ -1,8 +1,8 @@
 package routers
 
 import (
-	"lili-backend/internal/auth/controller"
-	"lili-backend/internal/auth/middleware"
+	"Backend_Lili/internal/auth/controller"
+	"Backend_Lili/internal/auth/middleware"
 
 	beego "github.com/beego/beego/v2/server/web"
 )

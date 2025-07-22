@@ -3,8 +3,8 @@ package controllers
 import (
 	"encoding/json"
 
-	"lili-backend/models"
-	"lili-backend/utils"
+	"Backend_Lili/internal/user/model"
+	"Backend_Lili/pkg/utils"
 )
 
 type UserController struct {
@@ -29,7 +29,7 @@ func (c *UserController) GetProfile() {
 		return
 	}
 
-	user, err := models.GetUserByOpenID(claims.OpenID)
+	user, err := model.GetUserByOpenID(claims.OpenID)
 	if err != nil {
 		c.WriteError(utils.ERROR_NOT_FOUND, "user not found")
 		return

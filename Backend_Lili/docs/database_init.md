@@ -4,7 +4,7 @@
 
 ### 1. 数据库连接配置
 
-在 `lilibd/pkg/conf/app.conf` 中配置数据库连接信息：
+在 `Backend_Lili/pkg/conf/app.conf` 中配置数据库连接信息：
 
 ```ini
 # 数据库配置
@@ -18,7 +18,7 @@ db_charset = utf8mb4     # 字符集
 
 ### 2. 数据库初始化
 
-在 `lilibd/internal/user/model/init.go` 中进行数据库初始化：
+在 `Backend_Lili/internal/user/model/init.go` 中进行数据库初始化：
 
 ```go
 func Init() {
@@ -105,7 +105,7 @@ CREATE DATABASE lilidb CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 ### 2. 配置数据库连接
 
-修改 `lilibd/pkg/conf/app.conf` 中的数据库配置：
+修改 `Backend_Lili/pkg/conf/app.conf` 中的数据库配置：
 
 ```ini
 # 数据库配置
@@ -138,7 +138,7 @@ jwt_expire_hours = 168  # 7天过期
 在开发模式下，应用会自动创建表结构：
 
 ```bash
-cd lilibd
+cd Backend_Lili
 go run cmd/api/main.go
 ```
 

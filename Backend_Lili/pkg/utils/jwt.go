@@ -5,7 +5,7 @@ import (
 	"time"
 
 	beego "github.com/beego/beego/v2/server/web"
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt/v4"
 )
 
 type Claims struct {
@@ -26,7 +26,7 @@ func GenerateToken(userID int, openID string, duration time.Duration) (string, e
 		OpenID: openID,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expireTime.Unix(),
-			Issuer:    "lili-backend",
+			Issuer:    "Backend_Lili",
 		},
 	}
 

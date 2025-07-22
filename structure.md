@@ -3,7 +3,7 @@
 ## 项目结构
 
 ```
-lili-backend(lilibd)/
+Backend_Lili/
 ├── cmd/                    # 程序入口
 │   └── api/
 │       └── main.go         # 主程序入口

@@ -5,9 +5,9 @@ import (
 	"encoding/hex"
 	"time"
 
-	"lili-backend/lilibd/internal/auth/model"
-	"lili-backend/lilibd/internal/auth/repository"
-	"lili-backend/lilibd/pkg/utils"
+	"Backend_Lili/internal/auth/model"
+	"Backend_Lili/internal/auth/repository"
+	"Backend_Lili/pkg/utils"
 
 	"github.com/beego/beego/v2/core/logs"
 )

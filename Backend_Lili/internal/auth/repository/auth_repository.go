@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"lili-backend/lilibd/internal/auth/model"
+	"Backend_Lili/internal/auth/model"
 	"time"
 
 	"github.com/beego/beego/v2/client/orm"

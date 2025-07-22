@@ -1,8 +1,8 @@
 package main
 
 import (
-	"lilibackend/internal/user/model"
-	_ "lilibackend/routers"
+	"Backend_Lili/internal/user/model"
+	_ "Backend_Lili/routers"
 
 	"github.com/beego/beego/v2/client/orm"
 	beego "github.com/beego/beego/v2/server/web"

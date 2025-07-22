@@ -3,9 +3,9 @@ package controller
 import (
 	"strings"
 
-	"lili-backend/lilibd/internal/auth/model"
-	"lili-backend/lilibd/internal/auth/service"
-	"lili-backend/lilibd/pkg/utils"
+	"Backend_Lili/internal/auth/model"
+	"Backend_Lili/internal/auth/service"
+	"Backend_Lili/pkg/utils"
 
 	"github.com/beego/beego/v2/core/logs"
 	"github.com/beego/beego/v2/core/validation"
