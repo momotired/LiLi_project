@@ -15,7 +15,7 @@
           <text class="logo-text">📱</text>
         </view>
         <text class="app-name">理理(Lili)</text>
-        <text class="app-desc">管理你的数码设备资产</text>
+        <text class="app-desc">开源/无广/免费 的数码设备管家</text>
       </view>
       
       <!-- 登录卡片 -->
@@ -87,6 +87,7 @@
 <script>
 import { ApiService, TokenManager } from '@/utils/api.js'
 import themeManager from '@/utils/theme.js'
+import router from '@/utils/router.js'
 
 export default {
   data() {
@@ -113,11 +114,10 @@ export default {
   methods: {
     // 检查登录状态
     checkLoginStatus() {
+      // 只有真正已登录时才跳转，游客模式下允许停留在登录页面
       if (TokenManager.isLoggedIn()) {
         // 已登录，跳转到主页
-        uni.reLaunch({
-          url: '/pages/index/index'
-        })
+        router.reLaunch('/main')
       }
     },
 
@@ -145,9 +145,7 @@ export default {
 
           // 跳转到主页
           setTimeout(() => {
-            uni.reLaunch({
-              url: '/pages/index/index'
-            })
+            router.reLaunch('/main')
           }, 1500)
         } else {
           throw new Error(result.message || '登录失败')
@@ -185,10 +183,28 @@ export default {
 
     // 游客登录
     handleGuestLogin() {
-      uni.showToast({
-        title: '功能开发中',
-        icon: 'none'
-      })
+      try {
+        // 设置游客模式标识
+        uni.setStorageSync('isGuestMode', true)
+        uni.setStorageSync('guestLoginTime', new Date().toISOString())
+
+        uni.showToast({
+          title: '进入游客体验',
+          icon: 'success'
+        })
+
+        // 跳转到主页
+        setTimeout(() => {
+          router.reLaunch('/main')
+        }, 1500)
+
+      } catch (error) {
+        console.error('游客登录失败:', error)
+        uni.showToast({
+          title: '进入失败，请重试',
+          icon: 'error'
+        })
+      }
     },
 
     // 显示隐私政策

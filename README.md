@@ -92,7 +92,7 @@ cd Frontend_Lili
 npm install
 
 # 启动开发服务器
-npm run dev:h5        # H5版本
+npm run dev:h5        # H5版本（网页）
 npm run dev:mp-weixin # 微信小程序版本
 ```
 

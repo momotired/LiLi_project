@@ -44,9 +44,31 @@ class TokenManager {
     uni.removeStorageSync('access_token')
     uni.removeStorageSync('refresh_token')
   }
-  
+
   static isLoggedIn() {
     return !!this.getAccessToken()
+  }
+
+  // 检查是否为游客模式
+  static isGuestMode() {
+    return uni.getStorageSync('isGuestMode') === true
+  }
+
+  // 检查是否已认证（包括游客模式）
+  static isAuthenticated() {
+    return this.isLoggedIn() || this.isGuestMode()
+  }
+
+  // 清除游客模式
+  static clearGuestMode() {
+    uni.removeStorageSync('isGuestMode')
+    uni.removeStorageSync('guestLoginTime')
+  }
+
+  // 完全登出（清除所有认证信息）
+  static logout() {
+    this.clearTokens()
+    this.clearGuestMode()
   }
 }
 

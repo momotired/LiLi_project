@@ -1,9 +1,9 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/login/login",
+			"path": "pages/auth/login",
 			"style": {
-				"navigationBarTitleText": "登录",
+				"navigationBarTitleText": "用户登录",
 				"navigationStyle": "custom",
 				"app-plus": {
 					"titleNView": false
@@ -11,16 +11,63 @@
 			}
 		},
 		{
-			"path": "pages/index/index",
+			"path": "pages/dashboard/home",
 			"style": {
-				"navigationBarTitleText": "我的设备"
+				"navigationBarTitleText": "设备管家"
 			}
 		},
 		{
-			"path": "pages/color-demo/color-demo",
+			"path": "pages/device/list",
 			"style": {
-				"navigationBarTitleText": "蓝色主题预览",
+				"navigationBarTitleText": "设备列表"
+			}
+		},
+		{
+			"path": "pages/device/add",
+			"style": {
+				"navigationBarTitleText": "添加设备",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/device/detail",
+			"style": {
+				"navigationBarTitleText": "设备详情",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/device/edit",
+			"style": {
+				"navigationBarTitleText": "编辑设备",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/user/profile",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		{
+			"path": "pages/settings/index",
+			"style": {
+				"navigationBarTitleText": "系统设置"
+			}
+		},
+		{
+			"path": "pages/demo/theme",
+			"style": {
+				"navigationBarTitleText": "主题预览",
 				"navigationBarBackgroundColor": "#1e40af",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/demo/router-test",
+			"style": {
+				"navigationBarTitleText": "路由测试",
+				"navigationBarBackgroundColor": "#2196f3",
 				"navigationBarTextStyle": "white"
 			}
 		}
@@ -38,19 +85,19 @@
 		"backgroundColor": "#ffffff",
 		"list": [
 			{
-				"pagePath": "pages/index/index",
+				"pagePath": "pages/dashboard/home",
 				"iconPath": "static/tabbar/home.png",
 				"selectedIconPath": "static/tabbar/home-active.png",
 				"text": "首页"
 			},
 			{
-				"pagePath": "pages/index/index",
+				"pagePath": "pages/device/list",
 				"iconPath": "static/tabbar/discover.png",
 				"selectedIconPath": "static/tabbar/discover-active.png",
-				"text": "发现"
+				"text": "设备"
 			},
 			{
-				"pagePath": "pages/index/index",
+				"pagePath": "pages/user/profile",
 				"iconPath": "static/tabbar/profile.png",
 				"selectedIconPath": "static/tabbar/profile-active.png",
 				"text": "我的"

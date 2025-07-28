@@ -1,0 +1,10 @@
+# Netlify redirects file
+/login    /#/pages/login/login    200
+/main     /#/pages/index/index    200
+/device/add    /#/pages/device/add    200
+/device/detail    /#/pages/device/detail    200
+/device/edit    /#/pages/device/edit    200
+/color-demo    /#/pages/color-demo/color-demo    200
+
+# Fallback for SPA
+/*    /index.html    200

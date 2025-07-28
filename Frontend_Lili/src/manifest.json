@@ -65,7 +65,20 @@
     "mp-toutiao" : {
         "usingComponents" : true
     },
-    "uniStatistics": {  
+    /* H5特有相关 */
+    "h5" : {
+        "router" : {
+            "mode" : "history",
+            "base" : "/"
+        },
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : true
+            }
+        },
+        "title" : "LiLi设备管家"
+    },
+    "uniStatistics": {
         "enable": false
     },
     "vueVersion" : "3"
