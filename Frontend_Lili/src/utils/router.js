@@ -38,9 +38,9 @@ const routeMap = {
   '/demo/router-test': '/pages/demo/router-test',
   '/router-test': '/pages/demo/router-test',
 
-  // 兼容旧路由（逐步废弃）
-  '/index': '/pages/dashboard/home',
-  '/color-demo': '/pages/demo/theme'
+  // // 兼容旧路由（逐步废弃）
+  // '/index': '/pages/dashboard/home',
+  // '/color-demo': '/pages/demo/theme'
 }
 
 // 反向路由映射表
