@@ -2,6 +2,7 @@ package controller
 
 import (
 	"strings"
+	"time"
 
 	"Backend_Lili/internal/auth/model"
 	"Backend_Lili/internal/auth/service"
@@ -160,4 +161,13 @@ func getTokenFromHeader(ctx *context.Context) string {
 	}
 
 	return authHeader
+}
+
+// Health 健康检查接口
+func (c *AuthController) Health() {
+	utils.WriteSuccess(c.Ctx, map[string]interface{}{
+		"status":    "ok",
+		"message":   "理理小程序后端服务运行正常",
+		"timestamp": time.Now().Unix(),
+	})
 }
