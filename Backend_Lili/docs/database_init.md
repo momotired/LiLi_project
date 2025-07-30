@@ -8,12 +8,12 @@
 
 ```ini
 # 数据库配置
-db_host = 127.0.0.1      # 数据库主机地址
-db_port = 3306           # 数据库端口
-db_user = root           # 数据库用户名
-db_password = your_password  # 数据库密码
-db_name = lilidb         # 数据库名称
-db_charset = utf8mb4     # 字符集
+db_host = 212.129.244.183
+db_port = 3306
+db_user = root
+db_password = 12345678hz?
+db_name = lilidb
+db_charset = utf8mb4
 ```
 
 ### 2. 数据库初始化

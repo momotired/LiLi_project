@@ -1,4 +1,4 @@
-package models
+package model
 
 import (
 	"fmt"
@@ -27,8 +27,13 @@ func Init() { //大写开头表示公共方法 属于导出函数 能够被其�
 		panic(err)
 	}
 
-	// 注册模型
-	orm.RegisterModel(new(User))
+	// 注册所有模型
+	orm.RegisterModel(
+		new(User),
+		new(UserPreferences),
+		new(Tag),
+		new(UserTag),
+	)
 
 	// 开发模式下自动创建表
 	if beego.BConfig.RunMode == "dev" {

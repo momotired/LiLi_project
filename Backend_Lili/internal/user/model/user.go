@@ -1,4 +1,4 @@
-package models
+package model
 
 import (
 	"errors"
@@ -8,30 +8,26 @@ import (
 )
 
 type User struct {
-	ID          int       `orm:"auto;pk" json:"id"`
-	OpenID      string    `orm:"size(100);unique" json:"openid"`
-	UnionID     string    `orm:"size(100);null" json:"unionid"`
-	SessionKey  string    `orm:"size(100);null" json:"-"`
-	Nickname    string    `orm:"size(100);null" json:"nickname"`
-	Avatar      string    `orm:"size(500);null" json:"avatar"`
-	Gender      int       `orm:"default(0)" json:"gender"` // 0:未知 1:男 2:女
-	City        string    `orm:"size(100);null" json:"city"`
-	Province    string    `orm:"size(100);null" json:"province"`
-	Country     string    `orm:"size(100);null" json:"country"`
-	Language    string    `orm:"size(50);null" json:"language"`
-	Status      int       `orm:"default(1)" json:"status"` // 1:正常 0:禁用
-	LastLoginAt time.Time `orm:"null" json:"last_login_at"`
-	CreatedAt   time.Time `orm:"auto_now_add;type(datetime)" json:"created_at"`
-	UpdatedAt   time.Time `orm:"auto_now;type(datetime)" json:"updated_at"`
-	DeletedAt   time.Time `orm:"null;type(datetime)" json:"-"`
+	ID          int       `orm:"column(id);auto;pk" json:"id"`
+	OpenID      string    `orm:"column(openid);size(100);unique" json:"openid"`
+	UnionID     string    `orm:"column(unionid);size(100);null" json:"unionid"`
+	SessionKey  string    `orm:"column(session_key);size(100);null" json:"-"`
+	Nickname    string    `orm:"column(nickname);size(100);null" json:"nickname"`
+	Avatar      string    `orm:"column(avatar);size(500);null" json:"avatar"`
+	Gender      int       `orm:"column(gender);default(0)" json:"gender"` // 0:未知 1:男 2:女
+	City        string    `orm:"column(city);size(100);null" json:"city"`
+	Province    string    `orm:"column(province);size(100);null" json:"province"`
+	Country     string    `orm:"column(country);size(100);null" json:"country"`
+	Language    string    `orm:"column(language);size(50);null" json:"language"`
+	Status      int       `orm:"column(status);default(1)" json:"status"` // 1:正常 0:禁用
+	LastLoginAt time.Time `orm:"column(last_login_at);null" json:"last_login_at"`
+	CreatedAt   time.Time `orm:"column(created_at);auto_now_add;type(datetime)" json:"created_at"`
+	UpdatedAt   time.Time `orm:"column(updated_at);auto_now;type(datetime)" json:"updated_at"`
+	DeletedAt   time.Time `orm:"column(deleted_at);null;type(datetime)" json:"-"`
 }
 
 func (u *User) TableName() string {
 	return "users"
-}
-
-func init() {
-	orm.RegisterModel(new(User))
 }
 
 // 根据OpenID获取用户

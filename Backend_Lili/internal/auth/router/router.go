@@ -1,4 +1,4 @@
-package routers
+package router
 
 import (
 	"Backend_Lili/internal/auth/controller"
