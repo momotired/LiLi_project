@@ -80,3 +80,25 @@ func GetCurrentToken(ctx *context.Context) string {
 	}
 	return token.(string)
 }
+
+// 条件认证中间件 - 根据路径决定是否需要认证
+func ConditionalAuth(ctx *context.Context) {
+	// 获取当前请求路径
+	path := ctx.Request.URL.Path
+
+	// 不需要认证的路径
+	noAuthPaths := []string{
+		"/api/v1/auth/login",
+		"/api/v1/auth/refresh",
+	}
+
+	// 检查当前路径是否需要认证
+	for _, noAuthPath := range noAuthPaths {
+		if path == noAuthPath {
+			return // 不需要认证，直接通过
+		}
+	}
+
+	// 需要认证的路径，执行JWT认证
+	JWTAuth(ctx)
+}
