@@ -14,15 +14,16 @@ func Init() {
 	authController := &authCtrl.AuthController{}
 	userController := userCtrl.NewUserController()
 
+	// 添加全局CORS中间件
+	beego.InsertFilter("*", beego.BeforeRouter, middleware.GlobalCORS) //用于注册全局或特定路由添加过滤器（Filter） 的核心函数
+
 	// 创建API命名空间
 	ns := beego.NewNamespace("/api/v1",
 		// 认证相关路由
 		beego.NSNamespace("/auth",
-			// 不需要认证的接口
+			beego.NSBefore(middleware.ConditionalAuth), // 条件认证中间件
 			beego.NSRouter("/login", authController, "post:Login"),
 			beego.NSRouter("/refresh", authController, "post:RefreshToken"),
-
-			// 需要认证的接口
 			beego.NSRouter("/logout", authController, "post:Logout"),
 			beego.NSRouter("/verify", authController, "get:VerifyToken"),
 		),
