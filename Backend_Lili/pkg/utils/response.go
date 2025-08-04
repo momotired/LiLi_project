@@ -28,9 +28,10 @@ const (
 	SUCCESS         = 200
 	ERROR_PARAM     = 400
 	ERROR_AUTH      = 401
-	ERROR_FORBID    = 403
+	ERROR_FORBIDDEN = 403 // 添加缺失的常量
 	ERROR_NOT_FOUND = 404
 	ERROR_SERVER    = 500
+	ERROR_BUSINESS  = 600 // 业务逻辑错误
 	ERROR_WECHAT    = 1001
 )
 
@@ -52,9 +53,10 @@ var ErrorMessages = map[int]string{
 	SUCCESS:                   "success",
 	ERROR_PARAM:               "参数错误",
 	ERROR_AUTH:                "认证失败",
-	ERROR_FORBID:              "权限不足",
+	ERROR_FORBIDDEN:           "权限不足",
 	ERROR_NOT_FOUND:           "资源不存在",
 	ERROR_SERVER:              "服务器内部错误",
+	ERROR_BUSINESS:            "业务逻辑错误",
 	ERROR_WECHAT:              "微信接口错误",
 	ERROR_USER_NOT_FOUND:      "用户不存在",
 	ERROR_USER_DISABLED:       "用户已被禁用",

@@ -11,7 +11,7 @@ import (
 type Claims struct {
 	UserID int    `json:"user_id"`
 	OpenID string `json:"openid"`
-	jwt.StandardClaims
+	jwt.RegisteredClaims
 }
 
 // 生成JWT Token - 支持自定义过期时间
@@ -24,8 +24,8 @@ func GenerateToken(userID int, openID string, duration time.Duration) (string, e
 	claims := Claims{
 		UserID: userID,
 		OpenID: openID,
-		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: expireTime.Unix(),
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(expireTime),
 			Issuer:    "Backend_Lili",
 		},
 	}
@@ -74,7 +74,7 @@ func ValidateToken(token string) (*Claims, error) {
 		return nil, err
 	}
 
-	if claims.ExpiresAt < time.Now().Unix() {
+	if claims.ExpiresAt != nil && claims.ExpiresAt.Time.Before(time.Now()) {
 		return nil, errors.New("token expired")
 	}
 

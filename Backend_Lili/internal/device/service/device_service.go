@@ -59,10 +59,10 @@ func (s *DeviceService) GetDevicesList(userID int, req *GetDevicesListRequest) (
 	if req.Sort != "" {
 		// 验证排序字段
 		validSorts := map[string]bool{
-			"created_at":      true,
-			"purchase_price":  true,
-			"current_value":   true,
-			"purchase_date":   true,
+			"created_at":     true,
+			"purchase_price": true,
+			"current_value":  true,
+			"purchase_date":  true,
 		}
 		if validSorts[req.Sort] {
 			params["sort"] = req.Sort
@@ -81,11 +81,11 @@ func (s *DeviceService) GetDevicesList(userID int, req *GetDevicesListRequest) (
 	totalPages := int((total + int64(req.Limit) - 1) / int64(req.Limit))
 
 	return &GetDevicesListResponse{
-		Devices:     devices,
-		Total:       int(total),
-		Page:        req.Page,
-		Limit:       req.Limit,
-		TotalPages:  totalPages,
+		Devices:    devices,
+		Total:      int(total),
+		Page:       req.Page,
+		Limit:      req.Limit,
+		TotalPages: totalPages,
 	}, nil
 }
 
@@ -153,9 +153,9 @@ func (s *DeviceService) CreateDevice(userID int, req *CreateDeviceRequest) (*mod
 
 	// 构建设备对象
 	device := &model.Device{
-		UserID:        userID,
-		TemplateID:    req.TemplateID,
-		CategoryID:    req.CategoryID,
+		UserID:        &userID,
+		TemplateID:    &req.TemplateID,
+		CategoryID:    &req.CategoryID,
 		Name:          req.Name,
 		Brand:         req.Brand,
 		Model:         req.Model,
@@ -347,12 +347,12 @@ func (s *DeviceService) UpdateDeviceStatus(deviceID, userID int, req *UpdateDevi
 		if req.SaleDate == "" {
 			return utils.NewBusinessError(utils.ERROR_PARAM, "出售日期不能为空")
 		}
-		
+
 		parsedSaleDate, err := time.Parse("2006-01-02", req.SaleDate)
 		if err != nil {
 			return utils.NewBusinessError(utils.ERROR_PARAM, "出售日期格式错误")
 		}
-		
+
 		salePrice = &req.SalePrice
 		saleDate = &parsedSaleDate
 	}
@@ -409,15 +409,15 @@ func (s *DeviceService) GetDeviceValuation(deviceID, userID int) (*DeviceValuati
 	dailyDepreciation := depreciation / float64(holdingDays)
 
 	return &DeviceValuationResponse{
-		DeviceID:           deviceID,
-		PurchasePrice:      device.PurchasePrice,
-		CurrentValue:       currentValue,
-		Depreciation:       depreciation,
-		DepreciationRate:   depreciationRate,
-		HoldingDays:        holdingDays,
-		DailyDepreciation:  dailyDepreciation,
-		LastUpdateTime:     time.Now(),
-		PriceHistories:     priceHistories,
+		DeviceID:          deviceID,
+		PurchasePrice:     device.PurchasePrice,
+		CurrentValue:      currentValue,
+		Depreciation:      depreciation,
+		DepreciationRate:  depreciationRate,
+		HoldingDays:       holdingDays,
+		DailyDepreciation: dailyDepreciation,
+		LastUpdateTime:    time.Now(),
+		PriceHistories:    priceHistories,
 	}, nil
 }
 
@@ -451,9 +451,9 @@ func (s *DeviceService) BatchImportDevices(userID int, req *BatchImportDevicesRe
 		}
 
 		device := &model.Device{
-			UserID:        userID,
-			TemplateID:    deviceReq.TemplateID,
-			CategoryID:    deviceReq.CategoryID,
+			UserID:        &userID,
+			TemplateID:    &deviceReq.TemplateID,
+			CategoryID:    &deviceReq.CategoryID,
 			Name:          deviceReq.Name,
 			Brand:         deviceReq.Brand,
 			Model:         deviceReq.Model,
@@ -544,11 +544,11 @@ func (s *DeviceService) UploadDeviceImage(deviceID, userID int, file multipart.F
 		"image/png":  true,
 		"image/gif":  true,
 	}
-	
+
 	// 从文件扩展名判断类型
 	ext := strings.ToLower(filepath.Ext(fileHeader.Filename))
 	contentType := fileHeader.Header.Get("Content-Type")
-	
+
 	if !allowedTypes[contentType] && !allowedTypes["image/"+strings.TrimPrefix(ext, ".")] {
 		return nil, utils.NewBusinessError(utils.ERROR_PARAM, "不支持的文件类型，仅支持 JPEG、PNG、GIF 格式")
 	}
@@ -645,7 +645,7 @@ func (s *DeviceService) calculatePricePrediction(device *model.Device, histories
 	// 1. 数据预处理 - 按日期排序并提取价格序列
 	prices := make([]float64, len(histories))
 	dates := make([]time.Time, len(histories))
-	
+
 	for i := len(histories) - 1; i >= 0; i-- { // 反向遍历，使数据按时间正序
 		prices[len(histories)-1-i] = histories[i].Price
 		dates[len(histories)-1-i] = histories[i].RecordDate
@@ -712,7 +712,7 @@ func (s *DeviceService) analyzeTrend(prices []float64, dates []time.Time) *Trend
 	if absChangeRate < 0 {
 		absChangeRate = -absChangeRate
 	}
-	
+
 	if absChangeRate > 2.0 {
 		trendStrength = "strong"
 	} else if absChangeRate > 0.5 {
@@ -763,11 +763,11 @@ func (s *DeviceService) calculateVolatility(prices []float64) float64 {
 
 	mean := sum / float64(n)
 	variance := (sumSquares / float64(n)) - (mean * mean)
-	
+
 	if variance < 0 {
 		variance = 0
 	}
-	
+
 	return variance // 返回方差作为波动性指标
 }
 
@@ -834,7 +834,7 @@ func (s *DeviceService) calculateAccuracy(prices []float64) float64 {
 
 	// 数据点越多，波动性越小，准确度越高
 	baseAccuracy := 0.3 + (dataPoints/100)*0.4 // 基础准确度 0.3-0.7
-	volatilityPenalty := volatility * 2         // 波动性惩罚
+	volatilityPenalty := volatility * 2        // 波动性惩罚
 
 	accuracy := baseAccuracy - volatilityPenalty
 	if accuracy > 0.9 {
@@ -904,4 +904,4 @@ func (s *DeviceService) validateCreateDeviceRequest(req *CreateDeviceRequest) er
 	}
 
 	return nil
-} 
+}
