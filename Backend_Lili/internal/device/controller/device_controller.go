@@ -445,4 +445,4 @@ func (c *DeviceController) PredictDevicePrice() {
 	}
 
 	utils.WriteSuccess(c.Ctx, prediction)
-} 
+}

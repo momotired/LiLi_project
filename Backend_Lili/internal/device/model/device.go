@@ -8,6 +8,8 @@ import (
 type Device struct {
 	ID             int       `orm:"column(id);auto;pk" json:"id"`
 	UserID         *int      `orm:"column(user_id);rel(fk);null" json:"user_id"`
+	TemplateID     *int      `orm:"column(template_id);null" json:"template_id"`
+	CategoryID     *int      `orm:"column(category_id);null" json:"category_id"`
 	Name           string    `orm:"column(name);size(200)" json:"name"`
 	Brand          string    `orm:"column(brand);size(100)" json:"brand"`
 	Model          string    `orm:"column(model);size(100)" json:"model"`
@@ -45,30 +47,56 @@ func (d *Device) TableName() string {
 type DeviceTemplate struct {
 	ID          int       `orm:"column(id);auto;pk" json:"id"`
 	Name        string    `orm:"column(name);size(100)" json:"name"`
-	Fields      string    `orm:"column(fields);type(json)" json:"fields"` // JSON格式定义字段模板
+	CategoryID  int       `orm:"column(category_id);null" json:"category_id"`
 	Description string    `orm:"column(description);type(text);null" json:"description"`
+	Icon        string    `orm:"column(icon);size(500);null" json:"icon"`
+	Fields      string    `orm:"column(fields);type(json)" json:"fields"` // JSON格式定义字段模板
 	IsActive    bool      `orm:"column(is_active);default(true)" json:"is_active"`
+	UseCount    int       `orm:"column(use_count);default(0)" json:"use_count"` // 使用次数，用于热门模板统计
 	CreatedAt   time.Time `orm:"column(created_at);auto_now_add;type(datetime)" json:"created_at"`
 	UpdatedAt   time.Time `orm:"column(updated_at);auto_now;type(datetime)" json:"updated_at"`
+	DeletedAt   time.Time `orm:"column(deleted_at);null;type(datetime)" json:"-"`
 
 	// 关联字段
-	Category *Category `orm:"rel(fk);null;on_delete(cascade)" json:"category,omitempty"`
+	Category *Category `orm:"rel(fk);null;on_delete(set_null)" json:"category,omitempty"`
 }
 
 func (dt *DeviceTemplate) TableName() string {
 	return "device_templates"
 }
 
+// TemplateField 模板字段定义结构
+type TemplateField struct {
+	FieldName       string   `json:"field_name"`       // 字段名称
+	FieldLabel      string   `json:"field_label"`      // 字段显示名称
+	FieldType       string   `json:"field_type"`       // 字段类型：text/number/select/date/textarea
+	Required        bool     `json:"required"`         // 是否必填
+	DefaultValue    string   `json:"default_value"`    // 默认值
+	ValidationRules string   `json:"validation_rules"` // 验证规则
+	Options         []string `json:"options"`          // 选项列表(仅select类型)
+	Placeholder     string   `json:"placeholder"`      // 占位符
+	HelpText        string   `json:"help_text"`        // 帮助文本
+}
+
 // Category 设备分类表
 type Category struct {
-	ID        int       `orm:"column(id);auto;pk" json:"id"`
-	Name      string    `orm:"column(name);size(100)" json:"name"`
-	ParentID  int       `orm:"column(parent_id);null;default(0)" json:"parent_id"` // 0表示顶级分类
-	Icon      string    `orm:"column(icon);size(200);null" json:"icon"`
-	SortOrder int       `orm:"column(sort_order);default(0)" json:"sort_order"`
-	IsActive  bool      `orm:"column(is_active);default(true)" json:"is_active"`
-	CreatedAt time.Time `orm:"column(created_at);auto_now_add;type(datetime)" json:"created_at"`
-	UpdatedAt time.Time `orm:"column(updated_at);auto_now;type(datetime)" json:"updated_at"`
+	ID          int       `orm:"column(id);auto;pk" json:"id"`
+	Name        string    `orm:"column(name);size(100)" json:"name"`
+	Description string    `orm:"column(description);type(text);null" json:"description"`
+	ParentID    int       `orm:"column(parent_id);null;default(0)" json:"parent_id"` // 0表示顶级分类
+	Icon        string    `orm:"column(icon);size(500);null" json:"icon"`
+	Color       string    `orm:"column(color);size(20);null" json:"color"`
+	SortOrder   int       `orm:"column(sort_order);default(0)" json:"sort_order"`
+	Type        string    `orm:"column(type);size(20);default(system)" json:"type"` // system/custom
+	UserID      int       `orm:"column(user_id);null" json:"user_id"`               // 自定义分类的用户ID
+	IsActive    bool      `orm:"column(is_active);default(true)" json:"is_active"`
+	DeviceCount int       `orm:"-" json:"device_count,omitempty"` // 设备数量，不存储在数据库
+	CreatedAt   time.Time `orm:"column(created_at);auto_now_add;type(datetime)" json:"created_at"`
+	UpdatedAt   time.Time `orm:"column(updated_at);auto_now;type(datetime)" json:"updated_at"`
+	DeletedAt   time.Time `orm:"column(deleted_at);null;type(datetime)" json:"-"`
+
+	// 关联字段
+	Children []*Category `orm:"-" json:"children,omitempty"` // 子分类，不存储在数据库
 }
 
 func (c *Category) TableName() string {
@@ -78,6 +106,7 @@ func (c *Category) TableName() string {
 // DeviceImage 设备图片表
 type DeviceImage struct {
 	ID        int       `orm:"column(id);auto;pk" json:"id"`
+	DeviceID  int       `orm:"column(device_id)" json:"device_id"`
 	ImageURL  string    `orm:"column(image_url);size(500)" json:"image_url"`
 	ImageType string    `orm:"column(image_type);size(20);default(normal)" json:"image_type"` // normal/cover
 	SortOrder int       `orm:"column(sort_order);default(0)" json:"sort_order"`
@@ -93,7 +122,8 @@ func (di *DeviceImage) TableName() string {
 
 // PriceHistory 价格历史表
 type PriceHistory struct {
-	ID int `orm:"column(id);auto;pk" json:"id"`
+	ID       int `orm:"column(id);auto;pk" json:"id"`
+	DeviceID int `orm:"column(device_id)" json:"device_id"`
 
 	Source      string    `orm:"column(source);size(50)" json:"source"`          // 价格来源：manual/market_api
 	Platform    string    `orm:"column(platform);size(50);null" json:"platform"` // 平台名称：如闲鱼、转转等

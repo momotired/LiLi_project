@@ -235,11 +235,11 @@ func (s *AuthService) VerifyToken(token string) (*model.TokenVerifyResponse, err
 	}
 
 	// 4. 计算剩余时间
-	remainingTime := claims.ExpiresAt - time.Now().Unix()
+	remainingTime := claims.ExpiresAt.Time.Unix() - time.Now().Unix()
 
 	return &model.TokenVerifyResponse{
 		UserInfo:      user,
-		ExpiresIn:     claims.ExpiresAt,
+		ExpiresIn:     claims.ExpiresAt.Time.Unix(),
 		RemainingTime: remainingTime,
 	}, nil
 }
