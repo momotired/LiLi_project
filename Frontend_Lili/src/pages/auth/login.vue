@@ -22,7 +22,7 @@
       <view class="login-card">
         <view class="card-header">
           <text class="welcome-text">欢迎使用</text>
-          <text class="subtitle">一键登录，开始管理你的设备</text>
+          <text class="subtitle">一键登录，开始管理你的设备！</text>
         </view>
         
         <view class="login-methods">
@@ -74,11 +74,6 @@
           和
           <text class="link-text" @click="showTerms">《服务条款》</text>
         </text>
-
-        <!-- 颜色主题按钮 -->
-        <button class="theme-btn" @click="showColorDemo">
-          <text class="theme-text">🎨 更换蓝色主题</text>
-        </button>
       </view>
     </view>
   </view>
@@ -222,13 +217,6 @@ export default {
         title: '服务条款',
         content: '这里是服务条款内容...',
         showCancel: false
-      })
-    },
-
-    // 显示颜色演示页面
-    showColorDemo() {
-      uni.navigateTo({
-        url: '/pages/color-demo/color-demo'
       })
     },
 
@@ -517,30 +505,5 @@ export default {
 .link-text {
   color: #ffffff;
   text-decoration: underline;
-}
-
-/* 主题按钮 */
-.theme-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: 2rpx solid rgba(255, 255, 255, 0.2);
-  border-radius: 30rpx;
-  padding: 16rpx 32rpx;
-  margin-top: 30rpx;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-}
-
-.theme-btn::after {
-  border: none;
-}
-
-.theme-btn:active {
-  background: rgba(255, 255, 255, 0.15);
-  transform: translateY(1rpx);
-}
-
-.theme-text {
-  color: #ffffff;
-  font-size: 24rpx;
 }
 </style>
