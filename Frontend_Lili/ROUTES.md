@@ -34,14 +34,11 @@
 - `/settings/index` → 系统设置页面（完整路径）
 
 ### 🎨 演示和测试页面
-- `/demo/theme` → 主题预览页面
-- `/theme` → 主题预览页面（简写）
 - `/demo/router-test` → 路由测试页面
 - `/router-test` → 路由测试页面（简写）
 
 ### 🔄 兼容旧路由（逐步废弃）
 - `/index` → 重定向到仪表板首页
-- `/color-demo` → 重定向到主题预览页面
 
 ## 页面文件结构
 
@@ -61,7 +58,6 @@ src/pages/
 ├── settings/               # 设置页面
 │   └── index.vue          # 系统设置
 └── demo/                   # 演示页面
-    ├── theme.vue          # 主题预览
     └── router-test.vue    # 路由测试
 ```
 

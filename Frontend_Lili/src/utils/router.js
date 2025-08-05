@@ -33,14 +33,11 @@ const routeMap = {
   '/settings/index': '/pages/settings/index',
 
   // 演示和测试页面
-  '/demo/theme': '/pages/demo/theme',
-  '/theme': '/pages/demo/theme',
   '/demo/router-test': '/pages/demo/router-test',
   '/router-test': '/pages/demo/router-test',
 
   // // 兼容旧路由（逐步废弃）
   // '/index': '/pages/dashboard/home',
-  // '/color-demo': '/pages/demo/theme'
 }
 
 // 反向路由映射表
@@ -54,7 +51,7 @@ class RouterManager {
     this.currentRoute = '/'
     this.init()
   }
-  
+
   // 初始化路由管理器
   init() {
     // 监听页面加载完成
@@ -63,7 +60,7 @@ class RouterManager {
       this.setupHistoryListener()
     }
   }
-  
+
   // 处理初始路由
   handleInitialRoute() {
     // 这个方法现在由index.html中的脚本处理
@@ -73,14 +70,14 @@ class RouterManager {
       this.currentRoute = currentPath
     }
   }
-  
+
   // 设置历史记录监听
   setupHistoryListener() {
     // 监听浏览器前进后退
     window.addEventListener('popstate', () => {
       const currentPath = window.location.pathname
       const targetPage = routeMap[currentPath]
-      
+
       if (targetPage) {
         uni.reLaunch({
           url: targetPage
@@ -88,7 +85,7 @@ class RouterManager {
       }
     })
   }
-  
+
   // 导航到指定路由
   navigateTo(simplePath, params = {}) {
     const targetPage = routeMap[simplePath]
@@ -132,7 +129,7 @@ class RouterManager {
 
     return true
   }
-  
+
   // 重定向到指定路由
   redirectTo(simplePath, params = {}) {
     const targetPage = routeMap[simplePath]
@@ -176,7 +173,7 @@ class RouterManager {
 
     return true
   }
-  
+
   // 重新启动到指定路由
   reLaunch(simplePath, params = {}) {
     const targetPage = routeMap[simplePath]
@@ -234,11 +231,11 @@ class RouterManager {
 
     return true
   }
-  
+
   // 更新浏览器地址栏
   updateBrowserUrl(simplePath, params = {}) {
     if (typeof window === 'undefined') return
-    
+
     let url = simplePath
     if (Object.keys(params).length > 0) {
       const queryString = Object.keys(params)
@@ -246,29 +243,29 @@ class RouterManager {
         .join('&')
       url += `?${queryString}`
     }
-    
+
     // 使用pushState更新地址栏，不刷新页面
     window.history.pushState({ path: simplePath }, '', url)
   }
-  
+
   // 获取当前简洁路由
   getCurrentSimpleRoute() {
     if (typeof window === 'undefined') return '/'
-    
+
     const currentPath = window.location.pathname
     return currentPath in routeMap ? currentPath : '/'
   }
-  
+
   // 根据uni-app页面路径获取简洁路由
   getSimpleRouteByPage(pagePath) {
     return reverseRouteMap[pagePath] || pagePath
   }
-  
+
   // 检查路由是否存在
   routeExists(simplePath) {
     return simplePath in routeMap
   }
-  
+
   // 获取所有路由
   getAllRoutes() {
     return { ...routeMap }
