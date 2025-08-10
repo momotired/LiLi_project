@@ -4,6 +4,7 @@ import (
 	"log"
 
 	deviceModel "Backend_Lili/internal/device/model"
+	priceModel "Backend_Lili/internal/price/model"
 	"Backend_Lili/internal/router"
 	"Backend_Lili/internal/user/model"
 
@@ -82,6 +83,10 @@ func initDatabase() error {
 	// 初始化设备模块数据模型
 	deviceModel.Init()
 	log.Println("设备模块数据模型初始化完成")
+
+	// 初始化价格模块数据模型
+	priceModel.Init()
+	log.Println("价格模块数据模型初始化完成")
 
 	log.Println("数据库初始化成功")
 	return nil

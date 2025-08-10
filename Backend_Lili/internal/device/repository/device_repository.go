@@ -14,7 +14,7 @@ func NewDeviceRepository() *DeviceRepository {
 	return &DeviceRepository{}
 }
 
-// GetDevicesList 获取设备列表
+// GetDevicesList 获取设备列表   键为字符串类型 值为任意类型的映射 处理结构不固定 类型不确定的数据（动态数据）
 func (r *DeviceRepository) GetDevicesList(userID int, params map[string]interface{}) ([]*model.Device, int64, error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("devices").Filter("user_id", userID).Filter("deleted_at__isnull", true)

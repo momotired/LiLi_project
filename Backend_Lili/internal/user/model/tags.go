@@ -1,12 +1,24 @@
 package model
 
 import (
-	"github.com/beego/beego/v2/client/orm"
+    "time"
+
+    "github.com/beego/beego/v2/client/orm"
 )
 
 type Tag struct {
-	ID   int    `orm:"column(id);auto;pk" json:"id"`
-	Name string `orm:"column(name);size(100);unique" json:"name"`
+    ID          int       `orm:"column(id);auto;pk" json:"id"`
+    Name        string    `orm:"column(name);size(100)" json:"name"`
+    Description string    `orm:"column(description);size(500);null" json:"description"`
+    Category    string    `orm:"column(category);size(100);null" json:"category"`
+    Color       string    `orm:"column(color);size(20);null" json:"color"`
+    Icon        string    `orm:"column(icon);size(200);null" json:"icon"`
+    Type        string    `orm:"column(type);size(20);default(system)" json:"type"` // system/custom
+    Active      bool      `orm:"column(active);default(true)" json:"active"`
+    UsageCount  int       `orm:"column(usage_count);default(0)" json:"usage_count"`
+    OwnerID     int       `orm:"column(owner_id);null" json:"owner_id"` // 自定义标签所属用户
+    CreatedAt   time.Time `orm:"column(created_at);auto_now_add;type(datetime)" json:"created_at"`
+    UpdatedAt   time.Time `orm:"column(updated_at);auto_now;type(datetime)" json:"updated_at"`
 }
 
 type UserTag struct {
