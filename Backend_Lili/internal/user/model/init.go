@@ -1,11 +1,11 @@
 package model
 
 import (
-	"fmt"
+    "fmt"
 
-	"github.com/beego/beego/v2/client/orm"
-	beego "github.com/beego/beego/v2/server/web"
-	_ "github.com/go-sql-driver/mysql"
+    "github.com/beego/beego/v2/client/orm"
+    beego "github.com/beego/beego/v2/server/web"
+    _ "github.com/go-sql-driver/mysql"
 )
 
 func Init() { //大写开头表示公共方法 属于导出函数 能够被其他包引用 执行数据库全局初始化
@@ -35,11 +35,5 @@ func Init() { //大写开头表示公共方法 属于导出函数 能够被其�
 		new(UserTag),
 	)
 
-	// 开发模式下自动创建表
-	if beego.BConfig.RunMode == "dev" {
-		err = orm.RunSyncdb("default", false, true)
-		if err != nil {
-			panic(err)
-		}
-	}
+    // 不再自动建表：生产与开发环境均通过 SQL 脚本初始化数据库
 }

@@ -3,6 +3,9 @@ package router
 import (
 	authCtrl "Backend_Lili/internal/auth/controller"
 	"Backend_Lili/internal/auth/middleware"
+	priceRouter "Backend_Lili/internal/price/router"
+    statsRouter "Backend_Lili/internal/statistics/router"
+    tagsRouter "Backend_Lili/internal/tags/router"
 	userCtrl "Backend_Lili/internal/user/controller"
 
 	beego "github.com/beego/beego/v2/server/web"
@@ -52,6 +55,13 @@ func Init() {
 
 	// 注册命名空间
 	beego.AddNamespace(ns)
+
+	// 初始化价格模块路由
+	priceRouter.InitPriceRoutes()
+    // 初始化统计模块路由
+    statsRouter.InitStatisticsRoutes()
+    // 初始化标签模块路由
+    tagsRouter.InitTagsRoutes()
 
 	// 健康检查路由
 	beego.Router("/health", authController, "get:Health")
