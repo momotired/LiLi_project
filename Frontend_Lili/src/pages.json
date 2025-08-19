@@ -56,14 +56,6 @@
 			}
 		},
 		{
-			"path": "pages/demo/theme",
-			"style": {
-				"navigationBarTitleText": "主题预览",
-				"navigationBarBackgroundColor": "#1e40af",
-				"navigationBarTextStyle": "white"
-			}
-		},
-		{
 			"path": "pages/demo/router-test",
 			"style": {
 				"navigationBarTitleText": "路由测试",

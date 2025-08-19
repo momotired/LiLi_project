@@ -81,29 +81,21 @@
 
 <script>
 import { ApiService, TokenManager } from '@/utils/api.js'
-import themeManager from '@/utils/theme.js'
 import router from '@/utils/router.js'
 
 export default {
   data() {
     return {
-      isLoading: false,
-      themeStyles: {}
+      isLoading: false
     }
   },
 
   onLoad() {
     // 检查是否已登录
     this.checkLoginStatus()
-    // 应用当前主题
-    this.applyCurrentTheme()
-    // 监听主题变更
-    uni.$on('themeChanged', this.onThemeChanged)
   },
 
   onUnload() {
-    // 移除主题变更监听
-    uni.$off('themeChanged', this.onThemeChanged)
   },
 
   methods: {
@@ -220,17 +212,7 @@ export default {
       })
     },
 
-    // 应用当前主题
-    applyCurrentTheme() {
-      this.themeStyles = themeManager.getThemeStyles()
-    },
-
-    // 主题变更回调
-    onThemeChanged(event) {
-      this.applyCurrentTheme()
-      // 可以在这里添加页面刷新逻辑
-      console.log('主题已变更:', event.theme.name)
-    }
+    
   }
 }
 </script>

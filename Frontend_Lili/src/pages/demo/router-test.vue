@@ -88,15 +88,7 @@
           </button>
         </view>
 
-        <!-- 演示页面 -->
-        <view class="nav-group">
-          <text class="group-title">演示页面</text>
-          
-          <button class="nav-button" @click="testRoute('/theme')">
-            <text class="btn-text">主题预览</text>
-            <text class="btn-route">/theme</text>
-          </button>
-        </view>
+        
       </view>
     </view>
 
