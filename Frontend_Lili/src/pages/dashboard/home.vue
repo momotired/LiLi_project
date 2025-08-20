@@ -9,7 +9,7 @@
       </view>
 
       <view class="nav-center">
-        <text class="nav-title">LiLi设备管家1</text>
+        <text class="nav-title">LiLi设备管家</text>
         <text v-if="isGuestMode" class="guest-badge">游客体验</text>
       </view>
 

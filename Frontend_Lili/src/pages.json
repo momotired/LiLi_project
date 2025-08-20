@@ -78,18 +78,21 @@
 		"list": [
 			{
 				"pagePath": "pages/dashboard/home",
-				"text": "首页1",
-				"iconPath": "🏠"
+				"text": "首页",
+				"iconPath": "static/tabbar/home.png",
+				"selectedIconPath": "static/tabbar/home-active.png"
 			},
 			{
 				"pagePath": "pages/device/list",
 				"text": "设备",
-				"iconPath": "⚙️"
+				"iconPath": "static/tabbar/discover.png",
+				"selectedIconPath": "static/tabbar/discover-active.png"
 			},
 			{
 				"pagePath": "pages/user/profile",
 				"text": "我的",
-				"iconPath": "👤"
+				"iconPath": "static/tabbar/profile.png",
+				"selectedIconPath": "static/tabbar/profile-active.png"
 			}
 		]
 	}
