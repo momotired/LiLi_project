@@ -14,7 +14,7 @@
         <view class="logo-icon">
           <text class="logo-text">📱</text>
         </view>
-        <text class="app-name">理理(Lili)</text>
+        <text class="app-name">理理(Lili)1111</text>
         <text class="app-desc">开源/无广/免费 的数码设备管家</text>
       </view>
       
