@@ -8,8 +8,8 @@ import (
 type Device struct {
 	ID             int       `orm:"column(id);auto;pk" json:"id"`
 	UserID         *int      `orm:"column(user_id);rel(fk);null" json:"user_id"`
-	TemplateID     *int      `orm:"column(template_id);null" json:"template_id"`
-	CategoryID     *int      `orm:"column(category_id);null" json:"category_id"`
+	// TemplateID     *int      `orm:"column(template_id);null" json:"template_id"`
+	// CategoryID     *int      `orm:"column(category_id);null" json:"category_id"`
 	Name           string    `orm:"column(name);size(200)" json:"name"`
 	Brand          string    `orm:"column(brand);size(100)" json:"brand"`
 	Model          string    `orm:"column(model);size(100)" json:"model"`
@@ -47,7 +47,6 @@ func (d *Device) TableName() string {
 type DeviceTemplate struct {
 	ID          int       `orm:"column(id);auto;pk" json:"id"`
 	Name        string    `orm:"column(name);size(100)" json:"name"`
-	CategoryID  int       `orm:"column(category_id);null" json:"category_id"`
 	Description string    `orm:"column(description);type(text);null" json:"description"`
 	Icon        string    `orm:"column(icon);size(500);null" json:"icon"`
 	Fields      string    `orm:"column(fields);type(json)" json:"fields"` // JSON格式定义字段模板
@@ -106,7 +105,7 @@ func (c *Category) TableName() string {
 // DeviceImage 设备图片表
 type DeviceImage struct {
 	ID        int       `orm:"column(id);auto;pk" json:"id"`
-	DeviceID  int       `orm:"column(device_id)" json:"device_id"`
+	// DeviceID  int       `orm:"column(device_id)" json:"device_id"`
 	ImageURL  string    `orm:"column(image_url);size(500)" json:"image_url"`
 	ImageType string    `orm:"column(image_type);size(20);default(normal)" json:"image_type"` // normal/cover
 	SortOrder int       `orm:"column(sort_order);default(0)" json:"sort_order"`
@@ -120,23 +119,4 @@ func (di *DeviceImage) TableName() string {
 	return "device_images"
 }
 
-// PriceHistory 价格历史表
-type PriceHistory struct {
-	ID       int `orm:"column(id);auto;pk" json:"id"`
-	DeviceID int `orm:"column(device_id)" json:"device_id"`
 
-	Source      string    `orm:"column(source);size(50)" json:"source"`          // 价格来源：manual/market_api
-	Platform    string    `orm:"column(platform);size(50);null" json:"platform"` // 平台名称：如闲鱼、转转等
-	Price       float64   `orm:"column(price);digits(10);decimals(2)" json:"price"`
-	Condition   string    `orm:"column(condition);size(20)" json:"condition"`
-	Description string    `orm:"column(description);size(500);null" json:"description"`
-	RecordDate  time.Time `orm:"column(record_date);type(date)" json:"record_date"`
-	CreatedAt   time.Time `orm:"column(created_at);auto_now_add;type(datetime)" json:"created_at"`
-
-	// 关联字段
-	Device *Device `orm:"rel(fk);on_delete(cascade)" json:"device,omitempty"`
-}
-
-func (ph *PriceHistory) TableName() string {
-	return "price_histories"
-}
