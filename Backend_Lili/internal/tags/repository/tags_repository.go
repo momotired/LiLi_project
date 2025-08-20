@@ -93,9 +93,10 @@ func (r *TagsRepository) SearchTags(keyword, category string) ([]*model.Tag, err
     qs := o.QueryTable("tags")
     if category != "" { qs = qs.Filter("category", category) }
     if keyword != "" {
-        like := "%" + strings.TrimSpace(keyword) + "%"
-        qs = qs.Filter("name__icontains", keyword).Filter("description__icontains", keyword).SetCond(orm.NewCondition().Or("name__icontains", keyword).Or("description__icontains", keyword))
-        // beego orm icontains on two fields needs cond; fallback to Raw when necessary
+        keyword = strings.TrimSpace(keyword)
+        cond := orm.NewCondition()
+        cond = cond.Or("name__icontains", keyword).Or("description__icontains", keyword)
+        qs = qs.SetCond(cond)
     }
     var tags []*model.Tag
     _, err := qs.OrderBy("name").All(&tags)
@@ -106,7 +107,13 @@ func (r *TagsRepository) GetTagCategories() ([]*struct{ Category string; Count i
     o := orm.NewOrm()
     var rows []struct{ Category string; Count int }
     _, err := o.Raw("SELECT COALESCE(category, '') as category, COUNT(*) as count FROM tags GROUP BY COALESCE(category, '')").QueryRows(&rows)
-    return rows, err
+    
+    // 转换为指针切片
+    result := make([]*struct{ Category string; Count int }, len(rows))
+    for i := range rows {
+        result[i] = &rows[i]
+    }
+    return result, err
 }
 
 func (r *TagsRepository) IsTagInUse(tagID int) (bool, error) {

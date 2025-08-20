@@ -177,7 +177,7 @@ func (r *PriceRepository) GetPriceSources() ([]*model.PriceSource, error) {
 func (r *PriceRepository) BatchUpdatePrices(prices []*model.Price) error {
 	o := orm.NewOrm()
 	// 开启事务
-	err := o.Begin()
+	tx, err := o.Begin()
 	if err != nil {
 		return err
 	}
@@ -194,11 +194,11 @@ func (r *PriceRepository) BatchUpdatePrices(prices []*model.Price) error {
 			// 不存在，创建新记录
 			_, err = o.Insert(price)
 			if err != nil {
-				o.Rollback()
+				tx.Rollback()
 				return err
 			}
 		} else if err != nil {
-			o.Rollback()
+			tx.Rollback()
 			return err
 		} else {
 			// 存在，更新记录
@@ -206,13 +206,13 @@ func (r *PriceRepository) BatchUpdatePrices(prices []*model.Price) error {
 			price.CreatedAt = existing.CreatedAt
 			_, err = o.Update(price)
 			if err != nil {
-				o.Rollback()
+				tx.Rollback()
 				return err
 			}
 		}
 	}
 
-	return o.Commit()
+	return tx.Commit()
 }
 
 // GetPricePrediction 获取价格预测
