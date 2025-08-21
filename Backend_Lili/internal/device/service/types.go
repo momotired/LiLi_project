@@ -84,7 +84,7 @@ type DeviceValuationResponse struct {
 	HoldingDays       int                   `json:"holding_days"`       // 持有天数
 	DailyDepreciation float64               `json:"daily_depreciation"` // 日均贬值
 	LastUpdateTime    time.Time             `json:"last_update_time"`
-	PriceHistories    []*model.PriceHistory `json:"price_histories"`
+	PriceHistories    []interface{} `json:"price_histories"` // 价格历史，具体类型在价格模块中定义
 }
 
 // 批量导入设备请求

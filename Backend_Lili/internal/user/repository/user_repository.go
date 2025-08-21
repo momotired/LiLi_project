@@ -21,7 +21,7 @@ func (r *UserRepository) GetUserByOpenID(openID string) (*model.User, error) {
 		return nil, errors.New("openID is required")
 	}
 	user := &model.User{}
-	err := o.QueryTable("users").Filter("open_id", openID).Filter("deleted_at__isnull", true).One(user)
+	err := o.QueryTable("users").Filter("openid", openID).Filter("deleted_at__isnull", true).One(user)
 	if err == orm.ErrNoRows {
 		return nil, nil
 	}

@@ -36,7 +36,6 @@ type UserInfo struct {
 	OpenID   string `json:"openid"`
 	NickName string `json:"nickname"`
 	Avatar   string `json:"avatar"`
-	Phone    string `json:"phone"`
 	Status   int    `json:"status"`
 }
 
@@ -49,22 +48,30 @@ type TokenClaims struct {
 
 // Token黑名单
 type TokenBlacklist struct {
-	ID        int       `json:"id"`
-	Token     string    `json:"token"`
-	ExpiresAt time.Time `json:"expires_at"`
-	CreatedAt time.Time `json:"created_at"`
+	ID        int       `orm:"column(id);auto;pk" json:"id"`
+	Token     string    `orm:"column(token);size(1000)" json:"token"`
+	ExpiresAt time.Time `orm:"column(expires_at);type(datetime)" json:"expires_at"`
+	CreatedAt time.Time `orm:"column(created_at);auto_now_add;type(datetime)" json:"created_at"`
+}
+
+func (t *TokenBlacklist) TableName() string {
+	return "token_blacklist"
 }
 
 // 用户会话
 type UserSession struct {
-	ID           int       `json:"id"`
-	UserID       int       `json:"user_id"`
-	OpenID       string    `json:"openid"`
-	SessionKey   string    `json:"session_key"`
-	AccessToken  string    `json:"access_token"`
-	RefreshToken string    `json:"refresh_token"`
-	ExpiresAt    time.Time `json:"expires_at"`
-	LastLoginAt  time.Time `json:"last_login_at"`
-	CreatedAt    time.Time `json:"created_at"`
-	UpdatedAt    time.Time `json:"updated_at"`
+	ID           int       `orm:"column(id);auto;pk" json:"id"`
+	UserID       int       `orm:"column(user_id)" json:"user_id"`
+	OpenID       string    `orm:"column(openid);size(100);null" json:"openid"`
+	SessionKey   string    `orm:"column(session_key);size(100);null" json:"session_key"`
+	AccessToken  string    `orm:"column(access_token);size(1000);null" json:"access_token"`
+	RefreshToken string    `orm:"column(refresh_token);size(1000);null" json:"refresh_token"`
+	ExpiresAt    time.Time `orm:"column(expires_at);null;type(datetime)" json:"expires_at"`
+	LastLoginAt  time.Time `orm:"column(last_login_at);null;type(datetime)" json:"last_login_at"`
+	CreatedAt    time.Time `orm:"column(created_at);auto_now_add;type(datetime)" json:"created_at"`
+	UpdatedAt    time.Time `orm:"column(updated_at);auto_now;type(datetime)" json:"updated_at"`
+}
+
+func (u *UserSession) TableName() string {
+	return "user_session"
 }

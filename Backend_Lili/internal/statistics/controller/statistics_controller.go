@@ -14,7 +14,15 @@ type StatisticsController struct {
 }
 
 func NewStatisticsController() *StatisticsController {
-    return &StatisticsController{svc: service.NewStatisticsService()}
+    return &StatisticsController{}
+}
+
+func (c *StatisticsController) Prepare() {
+    // 调用父类的Prepare方法
+    c.BaseController.Prepare()
+    
+    // 初始化统计服务
+    c.svc = service.NewStatisticsService()
 }
 
 // GET /statistics/dashboard

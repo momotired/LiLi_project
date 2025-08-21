@@ -1,0 +1,62 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# 文档
+README.md
+docs/
+*.md
+
+# 开发工具
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 日志文件
+*.log
+logs/
+
+# 临时文件
+tmp/
+temp/
+.tmp/
+
+# 测试文件
+*_test.go
+test/
+tests/
+
+# 构建产物
+main
+*.exe
+*.dll
+*.so
+*.dylib
+
+# 依赖目录
+vendor/
+
+# 环境变量文件
+.env
+.env.local
+.env.production
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# Docker文件
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# 脚本文件
+scripts/
+*.sh
+
+# 其他
+*.tar.gz
+*.zip

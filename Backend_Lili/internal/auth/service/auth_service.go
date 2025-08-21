@@ -7,6 +7,7 @@ import (
 
 	"Backend_Lili/internal/auth/model"
 	"Backend_Lili/internal/auth/repository"
+	userModel "Backend_Lili/internal/user/model"
 	"Backend_Lili/pkg/utils"
 
 	"github.com/beego/beego/v2/core/logs"
@@ -88,7 +89,7 @@ func (s *AuthService) WechatLogin(req *model.WechatLoginRequest) (*model.LoginRe
 		RefreshToken: refreshToken,
 		ExpiresIn:    24 * 3600, // 24小时
 		TokenType:    "Bearer",
-		UserInfo:     user,
+		UserInfo:     s.convertUserToUserInfo(user),
 	}, nil
 }
 
@@ -185,7 +186,7 @@ func (s *AuthService) RefreshToken(refreshToken string) (*model.LoginResponse, e
 		RefreshToken: newRefreshToken,
 		ExpiresIn:    24 * 3600,
 		TokenType:    "Bearer",
-		UserInfo:     user,
+		UserInfo:     s.convertUserToUserInfo(user),
 	}, nil
 }
 
@@ -238,10 +239,22 @@ func (s *AuthService) VerifyToken(token string) (*model.TokenVerifyResponse, err
 	remainingTime := claims.ExpiresAt.Time.Unix() - time.Now().Unix()
 
 	return &model.TokenVerifyResponse{
-		UserInfo:      user,
+		UserInfo:      s.convertUserToUserInfo(user),
 		ExpiresIn:     claims.ExpiresAt.Time.Unix(),
 		RemainingTime: remainingTime,
 	}, nil
+}
+
+// 转换User模型为UserInfo模型
+func (s *AuthService) convertUserToUserInfo(user *userModel.User) *model.UserInfo {
+	return &model.UserInfo{
+		ID:       user.ID,
+		OpenID:   user.OpenID,
+		NickName: user.Nickname,
+		Avatar:   user.Avatar,
+		// Phone:    "", // Phone字段在User模型中不存在，留空
+		Status:   user.Status,
+	}
 }
 
 // 生成随机字符串

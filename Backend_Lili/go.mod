@@ -1,6 +1,6 @@
 module Backend_Lili
 
-go 1.21
+go 1.20
 
 require (
 	github.com/beego/beego/v2 v2.3.8

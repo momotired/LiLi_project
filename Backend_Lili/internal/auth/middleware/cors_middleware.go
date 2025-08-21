@@ -2,7 +2,9 @@ package middleware
 
 import (
 	"strings"
+	"time"
 
+	"github.com/beego/beego/v2/core/logs"
 	beego "github.com/beego/beego/v2/server/web"
 	"github.com/beego/beego/v2/server/web/context"
 )
@@ -63,4 +65,20 @@ func CORS(ctx *context.Context) {
 func GlobalCORS(ctx *context.Context) {
 	// 对所有请求应用CORS
 	CORS(ctx)
+}
+
+// 访问日志中间件
+func AccessLog(ctx *context.Context) {
+	// 记录请求开始时间
+	startTime := time.Now()
+	
+	// 获取请求信息
+	method := ctx.Request.Method
+	path := ctx.Request.URL.Path
+	clientIP := ctx.Input.IP()
+	userAgent := ctx.Request.Header.Get("User-Agent")
+	
+	// 记录访问日志
+	logs.Info("[ACCESS] %s %s - IP: %s - UA: %s - Time: %s", 
+		method, path, clientIP, userAgent, startTime.Format("2006-01-02 15:04:05"))
 }

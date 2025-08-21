@@ -2,6 +2,7 @@ package repository
 
 import (
 	"Backend_Lili/internal/auth/model"
+	userModel "Backend_Lili/internal/user/model"
 	"time"
 
 	"github.com/beego/beego/v2/client/orm"
@@ -18,8 +19,8 @@ func NewAuthRepository() *AuthRepository {
 }
 
 // 根据OpenID查询用户
-func (r *AuthRepository) GetUserByOpenID(openID string) (*model.UserInfo, error) {
-	user := &model.UserInfo{}
+func (r *AuthRepository) GetUserByOpenID(openID string) (*userModel.User, error) {
+	user := &userModel.User{}
 	err := r.o.QueryTable("users").Filter("openid", openID).One(user)
 	if err != nil {
 		return nil, err
@@ -28,8 +29,8 @@ func (r *AuthRepository) GetUserByOpenID(openID string) (*model.UserInfo, error)
 }
 
 // 根据用户ID查询用户
-func (r *AuthRepository) GetUserByID(userID int) (*model.UserInfo, error) {
-	user := &model.UserInfo{}
+func (r *AuthRepository) GetUserByID(userID int) (*userModel.User, error) {
+	user := &userModel.User{}
 	err := r.o.QueryTable("users").Filter("id", userID).One(user)
 	if err != nil {
 		return nil, err
@@ -38,11 +39,13 @@ func (r *AuthRepository) GetUserByID(userID int) (*model.UserInfo, error) {
 }
 
 // 创建用户
-func (r *AuthRepository) CreateUser(openID string) (*model.UserInfo, error) {
-	user := &model.UserInfo{
+func (r *AuthRepository) CreateUser(openID string) (*userModel.User, error) {
+	user := &userModel.User{
 		OpenID:   openID,
-		NickName: "微信用户",
+		Nickname: "微信用户",
 		Status:   1,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
 	}
 
 	id, err := r.o.Insert(user)

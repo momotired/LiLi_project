@@ -1,23 +1,28 @@
 package controller
 
 import (
+	base "Backend_Lili/internal/auth/controller"
 	"Backend_Lili/internal/device/service"
 	"Backend_Lili/pkg/utils"
 	"encoding/json"
 	"strconv"
-
-	"github.com/beego/beego/v2/server/web"
 )
 
 type TemplateController struct {
-	web.Controller
+	base.BaseController
 	templateService *service.TemplateService
 }
 
 func NewTemplateController() *TemplateController {
-	return &TemplateController{
-		templateService: service.NewTemplateService(),
-	}
+	return &TemplateController{}
+}
+
+func (c *TemplateController) Prepare() {
+	// 调用父类的Prepare方法
+	c.BaseController.Prepare()
+	
+	// 初始化模板服务
+	c.templateService = service.NewTemplateService()
 }
 
 // GetTemplatesList 获取设备模板列表
