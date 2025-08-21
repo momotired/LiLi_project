@@ -14,9 +14,15 @@ type UserController struct {
 }
 
 func NewUserController() *UserController {
-	return &UserController{
-		userService: service.NewUserService(),
-	}
+	return &UserController{}
+}
+
+func (c *UserController) Prepare() {
+	// 调用父类的Prepare方法
+	c.BaseController.Prepare()
+	
+	// 初始化用户服务
+	c.userService = service.NewUserService()
 }
 
 // 1. 获取用户信息

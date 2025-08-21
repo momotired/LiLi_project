@@ -140,7 +140,7 @@ func (s *TemplateService) CreateTemplate(userID int, req *CreateTemplateRequest)
 	// 创建模板
 	template := &model.DeviceTemplate{
 		Name:        req.Name,
-		CategoryID:  req.CategoryID,
+		CategoryID:  &req.CategoryID,
 		Description: req.Description,
 		Icon:        req.Icon,
 		Fields:      string(fieldsJSON),
@@ -189,7 +189,7 @@ func (s *TemplateService) UpdateTemplate(userID, templateID int, req *UpdateTemp
 		if category == nil {
 			return nil, utils.NewBusinessError(utils.ERROR_NOT_FOUND, "分类不存在")
 		}
-		template.CategoryID = req.CategoryID
+		template.CategoryID = &req.CategoryID
 	}
 	if req.Description != "" {
 		template.Description = req.Description

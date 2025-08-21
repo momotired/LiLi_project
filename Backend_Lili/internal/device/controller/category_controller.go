@@ -1,30 +1,35 @@
 package controller
 
 import (
+	base "Backend_Lili/internal/auth/controller"
 	"Backend_Lili/internal/device/service"
 	"Backend_Lili/pkg/utils"
 	"encoding/json"
 	"strconv"
-
-	"github.com/beego/beego/v2/server/web"
 )
 
 type CategoryController struct {
-	web.Controller
+	base.BaseController
 	categoryService *service.CategoryService
 }
 
 func NewCategoryController() *CategoryController {
-	return &CategoryController{
-		categoryService: service.NewCategoryService(),
-	}
+	return &CategoryController{}
+}
+
+func (c *CategoryController) Prepare() {
+	// 调用父类的Prepare方法
+	c.BaseController.Prepare()
+	
+	// 初始化分类服务
+	c.categoryService = service.NewCategoryService()
 }
 
 // GetCategoriesList 获取分类列表
 // @router /categories [get]
 func (c *CategoryController) GetCategoriesList() {
 	// 从JWT中获取用户ID
-	userID, ok := c.Ctx.Input.GetData("userID").(int)
+	userID, ok := c.Ctx.Input.GetData("user_id").(int)
 	if !ok {
 		utils.WriteError(c.Ctx, utils.ERROR_AUTH, "用户认证失败")
 		return
@@ -55,7 +60,7 @@ func (c *CategoryController) GetCategoriesList() {
 // @router /categories/:category_id [get]
 func (c *CategoryController) GetCategoryDetail() {
 	// 从JWT中获取用户ID
-	userID, ok := c.Ctx.Input.GetData("userID").(int)
+	userID, ok := c.Ctx.Input.GetData("user_id").(int)
 	if !ok {
 		utils.WriteError(c.Ctx, utils.ERROR_AUTH, "用户认证失败")
 		return
@@ -87,7 +92,7 @@ func (c *CategoryController) GetCategoryDetail() {
 // @router /categories [post]
 func (c *CategoryController) CreateCustomCategory() {
 	// 从JWT中获取用户ID
-	userID, ok := c.Ctx.Input.GetData("userID").(int)
+	userID, ok := c.Ctx.Input.GetData("user_id").(int)
 	if !ok {
 		utils.WriteError(c.Ctx, utils.ERROR_AUTH, "用户认证失败")
 		return
@@ -118,7 +123,7 @@ func (c *CategoryController) CreateCustomCategory() {
 // @router /categories/:category_id [put]
 func (c *CategoryController) UpdateCustomCategory() {
 	// 从JWT中获取用户ID
-	userID, ok := c.Ctx.Input.GetData("userID").(int)
+	userID, ok := c.Ctx.Input.GetData("user_id").(int)
 	if !ok {
 		utils.WriteError(c.Ctx, utils.ERROR_AUTH, "用户认证失败")
 		return
@@ -157,7 +162,7 @@ func (c *CategoryController) UpdateCustomCategory() {
 // @router /categories/:category_id [delete]
 func (c *CategoryController) DeleteCustomCategory() {
 	// 从JWT中获取用户ID
-	userID, ok := c.Ctx.Input.GetData("userID").(int)
+	userID, ok := c.Ctx.Input.GetData("user_id").(int)
 	if !ok {
 		utils.WriteError(c.Ctx, utils.ERROR_AUTH, "用户认证失败")
 		return
@@ -210,7 +215,7 @@ func (c *CategoryController) GetSystemCategories() {
 // @router /categories/custom [get]
 func (c *CategoryController) GetCustomCategories() {
 	// 从JWT中获取用户ID
-	userID, ok := c.Ctx.Input.GetData("userID").(int)
+	userID, ok := c.Ctx.Input.GetData("user_id").(int)
 	if !ok {
 		utils.WriteError(c.Ctx, utils.ERROR_AUTH, "用户认证失败")
 		return
@@ -236,7 +241,7 @@ func (c *CategoryController) GetCustomCategories() {
 // @router /categories/sort [put]
 func (c *CategoryController) SortCategories() {
 	// 从JWT中获取用户ID
-	userID, ok := c.Ctx.Input.GetData("userID").(int)
+	userID, ok := c.Ctx.Input.GetData("user_id").(int)
 	if !ok {
 		utils.WriteError(c.Ctx, utils.ERROR_AUTH, "用户认证失败")
 		return
@@ -269,7 +274,7 @@ func (c *CategoryController) SortCategories() {
 // @router /categories/statistics [get]
 func (c *CategoryController) GetCategoryStatistics() {
 	// 从JWT中获取用户ID
-	userID, ok := c.Ctx.Input.GetData("userID").(int)
+	userID, ok := c.Ctx.Input.GetData("user_id").(int)
 	if !ok {
 		utils.WriteError(c.Ctx, utils.ERROR_AUTH, "用户认证失败")
 		return
@@ -300,7 +305,7 @@ func (c *CategoryController) GetCategoryStatistics() {
 // @router /categories/search [get]
 func (c *CategoryController) SearchCategories() {
 	// 从JWT中获取用户ID
-	userID, ok := c.Ctx.Input.GetData("userID").(int)
+	userID, ok := c.Ctx.Input.GetData("user_id").(int)
 	if !ok {
 		utils.WriteError(c.Ctx, utils.ERROR_AUTH, "用户认证失败")
 		return

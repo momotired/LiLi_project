@@ -3,6 +3,7 @@ package model
 import (
     "fmt"
 
+    authModel "Backend_Lili/internal/auth/model"
     "github.com/beego/beego/v2/client/orm"
     beego "github.com/beego/beego/v2/server/web"
     _ "github.com/go-sql-driver/mysql"
@@ -33,6 +34,8 @@ func Init() { //大写开头表示公共方法 属于导出函数 能够被其�
 		new(UserPreferences),
 		new(Tag),
 		new(UserTag),
+		new(authModel.UserSession),
+		new(authModel.TokenBlacklist),
 	)
 
     // 不再自动建表：生产与开发环境均通过 SQL 脚本初始化数据库

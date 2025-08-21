@@ -7,7 +7,7 @@ import (
 	"github.com/beego/beego/v2/server/web"
 )
 
-func init() {
+func InitDeviceRoutes() {
 	// 创建控制器实例
 	deviceController := controller.NewDeviceController()
 	categoryController := controller.NewCategoryController()

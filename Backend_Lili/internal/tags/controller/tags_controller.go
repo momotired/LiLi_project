@@ -14,7 +14,15 @@ type TagsController struct {
 }
 
 func NewTagsController() *TagsController {
-    return &TagsController{svc: service.NewTagsService()}
+    return &TagsController{}
+}
+
+func (c *TagsController) Prepare() {
+    // 调用父类的Prepare方法
+    c.BaseController.Prepare()
+    
+    // 初始化标签服务
+    c.svc = service.NewTagsService()
 }
 
 // GET /tags

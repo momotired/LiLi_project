@@ -7,9 +7,9 @@ import (
 // Device 设备信息表
 type Device struct {
 	ID             int       `orm:"column(id);auto;pk" json:"id"`
-	UserID         *int      `orm:"column(user_id);rel(fk);null" json:"user_id"`
-	// TemplateID     *int      `orm:"column(template_id);null" json:"template_id"`
-	// CategoryID     *int      `orm:"column(category_id);null" json:"category_id"`
+	UserID         int       `orm:"column(user_id)" json:"user_id"`
+	TemplateID     *int      `orm:"column(template_id);null" json:"template_id"`
+	CategoryID     *int      `orm:"column(category_id);null" json:"category_id"`
 	Name           string    `orm:"column(name);size(200)" json:"name"`
 	Brand          string    `orm:"column(brand);size(100)" json:"brand"`
 	Model          string    `orm:"column(model);size(100)" json:"model"`
@@ -33,10 +33,8 @@ type Device struct {
 	UpdatedAt      time.Time `orm:"column(updated_at);auto_now;type(datetime)" json:"updated_at"`
 	DeletedAt      time.Time `orm:"column(deleted_at);null;type(datetime)" json:"-"`
 
-	// 关联字段
-	Template *DeviceTemplate `orm:"rel(fk);null;on_delete(set_null)" json:"template,omitempty"`
-	Category *Category       `orm:"rel(fk);null;on_delete(set_null)" json:"category,omitempty"`
-	Images   []*DeviceImage  `orm:"reverse(many)" json:"images,omitempty"`
+	// 关联字段 (不使用ORM自动关联，在代码中手动加载)
+	Images []*DeviceImage `orm:"-" json:"images,omitempty"`
 }
 
 func (d *Device) TableName() string {
@@ -50,14 +48,14 @@ type DeviceTemplate struct {
 	Description string    `orm:"column(description);type(text);null" json:"description"`
 	Icon        string    `orm:"column(icon);size(500);null" json:"icon"`
 	Fields      string    `orm:"column(fields);type(json)" json:"fields"` // JSON格式定义字段模板
+	CategoryID  *int      `orm:"column(category_id);null" json:"category_id"`
 	IsActive    bool      `orm:"column(is_active);default(true)" json:"is_active"`
 	UseCount    int       `orm:"column(use_count);default(0)" json:"use_count"` // 使用次数，用于热门模板统计
 	CreatedAt   time.Time `orm:"column(created_at);auto_now_add;type(datetime)" json:"created_at"`
 	UpdatedAt   time.Time `orm:"column(updated_at);auto_now;type(datetime)" json:"updated_at"`
 	DeletedAt   time.Time `orm:"column(deleted_at);null;type(datetime)" json:"-"`
 
-	// 关联字段
-	Category *Category `orm:"rel(fk);null;on_delete(set_null)" json:"category,omitempty"`
+
 }
 
 func (dt *DeviceTemplate) TableName() string {
@@ -105,14 +103,13 @@ func (c *Category) TableName() string {
 // DeviceImage 设备图片表
 type DeviceImage struct {
 	ID        int       `orm:"column(id);auto;pk" json:"id"`
-	// DeviceID  int       `orm:"column(device_id)" json:"device_id"`
+	DeviceID  int       `orm:"column(device_id)" json:"device_id"`
 	ImageURL  string    `orm:"column(image_url);size(500)" json:"image_url"`
 	ImageType string    `orm:"column(image_type);size(20);default(normal)" json:"image_type"` // normal/cover
 	SortOrder int       `orm:"column(sort_order);default(0)" json:"sort_order"`
 	CreatedAt time.Time `orm:"column(created_at);auto_now_add;type(datetime)" json:"created_at"`
 
-	// 关联字段
-	Device *Device `orm:"rel(fk);on_delete(cascade)" json:"device,omitempty"`
+
 }
 
 func (di *DeviceImage) TableName() string {

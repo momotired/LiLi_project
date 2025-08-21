@@ -1,29 +1,34 @@
 package controller
 
 import (
+	base "Backend_Lili/internal/auth/controller"
 	"Backend_Lili/internal/device/service"
 	"Backend_Lili/pkg/utils"
 	"strconv"
-
-	"github.com/beego/beego/v2/server/web"
 )
 
 type DeviceController struct {
-	web.Controller
+	base.BaseController
 	deviceService *service.DeviceService
 }
 
 func NewDeviceController() *DeviceController {
-	return &DeviceController{
-		deviceService: service.NewDeviceService(),
-	}
+	return &DeviceController{}
+}
+
+func (c *DeviceController) Prepare() {
+	// 调用父类的Prepare方法
+	c.BaseController.Prepare()
+	
+	// 初始化设备服务
+	c.deviceService = service.NewDeviceService()
 }
 
 // GetDevicesList 获取设备列表
 // @router /devices [get]
 func (c *DeviceController) GetDevicesList() {
 	// 从JWT中获取用户ID
-	userID, ok := c.Ctx.Input.GetData("userID").(int)
+	userID, ok := c.Ctx.Input.GetData("user_id").(int)
 	if !ok {
 		utils.WriteError(c.Ctx, utils.ERROR_AUTH, "用户认证失败")
 		return
@@ -54,7 +59,7 @@ func (c *DeviceController) GetDevicesList() {
 // @router /devices/:deviceId [get]
 func (c *DeviceController) GetDeviceDetail() {
 	// 从JWT中获取用户ID
-	userID, ok := c.Ctx.Input.GetData("userID").(int)
+	userID, ok := c.Ctx.Input.GetData("user_id").(int)
 	if !ok {
 		utils.WriteError(c.Ctx, utils.ERROR_AUTH, "用户认证失败")
 		return
@@ -86,7 +91,7 @@ func (c *DeviceController) GetDeviceDetail() {
 // @router /devices [post]
 func (c *DeviceController) CreateDevice() {
 	// 从JWT中获取用户ID
-	userID, ok := c.Ctx.Input.GetData("userID").(int)
+	userID, ok := c.Ctx.Input.GetData("user_id").(int)
 	if !ok {
 		utils.WriteError(c.Ctx, utils.ERROR_AUTH, "用户认证失败")
 		return
@@ -117,7 +122,7 @@ func (c *DeviceController) CreateDevice() {
 // @router /devices/:deviceId [put]
 func (c *DeviceController) UpdateDevice() {
 	// 从JWT中获取用户ID
-	userID, ok := c.Ctx.Input.GetData("userID").(int)
+	userID, ok := c.Ctx.Input.GetData("user_id").(int)
 	if !ok {
 		utils.WriteError(c.Ctx, utils.ERROR_AUTH, "用户认证失败")
 		return
@@ -156,7 +161,7 @@ func (c *DeviceController) UpdateDevice() {
 // @router /devices/:deviceId [delete]
 func (c *DeviceController) DeleteDevice() {
 	// 从JWT中获取用户ID
-	userID, ok := c.Ctx.Input.GetData("userID").(int)
+	userID, ok := c.Ctx.Input.GetData("user_id").(int)
 	if !ok {
 		utils.WriteError(c.Ctx, utils.ERROR_AUTH, "用户认证失败")
 		return
@@ -188,7 +193,7 @@ func (c *DeviceController) DeleteDevice() {
 // @router /devices/:deviceId/status [patch]
 func (c *DeviceController) UpdateDeviceStatus() {
 	// 从JWT中获取用户ID
-	userID, ok := c.Ctx.Input.GetData("userID").(int)
+	userID, ok := c.Ctx.Input.GetData("user_id").(int)
 	if !ok {
 		utils.WriteError(c.Ctx, utils.ERROR_AUTH, "用户认证失败")
 		return
@@ -227,7 +232,7 @@ func (c *DeviceController) UpdateDeviceStatus() {
 // @router /devices/:deviceId/valuation [get]
 func (c *DeviceController) GetDeviceValuation() {
 	// 从JWT中获取用户ID
-	userID, ok := c.Ctx.Input.GetData("userID").(int)
+	userID, ok := c.Ctx.Input.GetData("user_id").(int)
 	if !ok {
 		utils.WriteError(c.Ctx, utils.ERROR_AUTH, "用户认证失败")
 		return
@@ -259,7 +264,7 @@ func (c *DeviceController) GetDeviceValuation() {
 // @router /devices/import [post]
 func (c *DeviceController) BatchImportDevices() {
 	// 从JWT中获取用户ID
-	userID, ok := c.Ctx.Input.GetData("userID").(int)
+	userID, ok := c.Ctx.Input.GetData("user_id").(int)
 	if !ok {
 		utils.WriteError(c.Ctx, utils.ERROR_AUTH, "用户认证失败")
 		return
@@ -290,7 +295,7 @@ func (c *DeviceController) BatchImportDevices() {
 // @router /devices/:deviceId/images [get]
 func (c *DeviceController) GetDeviceImages() {
 	// 从JWT中获取用户ID
-	userID, ok := c.Ctx.Input.GetData("userID").(int)
+	userID, ok := c.Ctx.Input.GetData("user_id").(int)
 	if !ok {
 		utils.WriteError(c.Ctx, utils.ERROR_AUTH, "用户认证失败")
 		return
@@ -322,7 +327,7 @@ func (c *DeviceController) GetDeviceImages() {
 // @router /devices/:deviceId/images [post]
 func (c *DeviceController) UploadDeviceImage() {
 	// 从JWT中获取用户ID
-	userID, ok := c.Ctx.Input.GetData("userID").(int)
+	userID, ok := c.Ctx.Input.GetData("user_id").(int)
 	if !ok {
 		utils.WriteError(c.Ctx, utils.ERROR_AUTH, "用户认证失败")
 		return
@@ -372,7 +377,7 @@ func (c *DeviceController) UploadDeviceImage() {
 // @router /devices/:deviceId/images/:imageId [delete]
 func (c *DeviceController) DeleteDeviceImage() {
 	// 从JWT中获取用户ID
-	userID, ok := c.Ctx.Input.GetData("userID").(int)
+	userID, ok := c.Ctx.Input.GetData("user_id").(int)
 	if !ok {
 		utils.WriteError(c.Ctx, utils.ERROR_AUTH, "用户认证失败")
 		return
@@ -412,7 +417,7 @@ func (c *DeviceController) DeleteDeviceImage() {
 // @router /devices/:deviceId/prediction [get]
 func (c *DeviceController) PredictDevicePrice() {
 	// 从JWT中获取用户ID
-	userID, ok := c.Ctx.Input.GetData("userID").(int)
+	userID, ok := c.Ctx.Input.GetData("user_id").(int)
 	if !ok {
 		utils.WriteError(c.Ctx, utils.ERROR_AUTH, "用户认证失败")
 		return

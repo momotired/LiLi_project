@@ -1,22 +1,27 @@
 package controller
 
 import (
+	base "Backend_Lili/internal/auth/controller"
 	"Backend_Lili/internal/price/service"
 	"Backend_Lili/pkg/utils"
 	"strconv"
-
-	"github.com/beego/beego/v2/server/web"
 )
 
 type PriceController struct {
-	web.Controller
+	base.BaseController
 	priceService *service.PriceService
 }
 
 func NewPriceController() *PriceController {
-	return &PriceController{
-		priceService: service.NewPriceService(),
-	}
+	return &PriceController{}
+}
+
+func (c *PriceController) Prepare() {
+	// 调用父类的Prepare方法
+	c.BaseController.Prepare()
+	
+	// 初始化价格服务
+	c.priceService = service.NewPriceService()
 }
 
 // GetDevicePrice 获取设备价格信息

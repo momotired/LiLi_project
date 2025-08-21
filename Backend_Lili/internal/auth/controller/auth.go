@@ -1,9 +1,9 @@
 package controller
 
 import (
+	"encoding/json"
 	"strings"
 	"time"
-
 	"Backend_Lili/internal/auth/model"
 	"Backend_Lili/internal/auth/service"
 	"Backend_Lili/pkg/utils"
@@ -37,7 +37,7 @@ func (c *AuthController) Prepare() {
 // POST /auth/login - 微信登录
 func (c *AuthController) Login() {
 	var req model.WechatLoginRequest
-	if err := c.ParseForm(&req); err != nil {
+	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &req); err != nil {
 		utils.WriteError(c.Ctx, utils.ERROR_PARAM, "请求参数格式错误")
 		return
 	}
@@ -165,6 +165,9 @@ func getTokenFromHeader(ctx *context.Context) string {
 
 // Health 健康检查接口
 func (c *AuthController) Health() {
+	// 记录访问日志
+	logs.Info("Health check accessed from IP: %s", c.Ctx.Input.IP())
+	
 	utils.WriteSuccess(c.Ctx, map[string]interface{}{
 		"status":    "ok",
 		"message":   "理理小程序后端服务运行正常",
